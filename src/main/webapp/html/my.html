@@ -4,8 +4,38 @@
     <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
     <link href="/css/my.css" rel="stylesheet">
 </head>
-<body>
+<body onload="list()">
 <h1>RPG admin panel</h1>
-
+<table id="table_1">
+    <tr>
+        <td>#</td>
+        <td>Name</td>
+        <td>Title</td>
+        <td>Race</td>
+        <td>Profession</td>
+        <td>Level</td>
+        <td>Birthday</td>
+        <td>Banned</td>
+    </tr>
+</table>
+<script>
+    function list(){
+        let url = "/rest/players";
+        $.get(url,function (response){
+            $.each(response, function (i,item){
+                $('tr').html("<td>"
+                    + item.id + "</td><td>"
+                    + item.name + "</td><td>"
+                    + item.title + "</td><td>"
+                    + item.race() + "</td><td>"
+                    + item.profession + "</td><td>"
+                    + item.level + "</td><td>"
+                    + new Date(item.birthday).toLocaleDateString() + "</td><td>"
+                    + item.banned + "</td><td>"
+                ).appendTo("table_1")
+            })
+        })
+    }
+</script>
 </body>
 </html>
